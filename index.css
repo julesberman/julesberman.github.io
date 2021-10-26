@@ -1,0 +1,71 @@
+@font-face {
+    font-family: "HK";
+    src: url(./HK-Regular.ttf) format("truetype");
+  }
+@font-face {
+  font-family: "HK";
+  src: url(./HK-SemiBold.ttf) format("truetype");
+  font-weight: bold;
+}
+* {
+  font-family: "HK";
+  font-size: 16px;
+}
+
+.top-half{
+  position: absolute;
+  z-index: -1;
+  width: 100vw;
+  height: 16vh;
+  background-color: rgb(238, 240, 255);
+}
+.bot-half{
+  position: absolute;
+  z-index: -2;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(16, 16, 16);
+}
+
+.root {
+  padding: 32px;
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  color: black
+}
+a:hover {
+  color: rgb(0, 0, 255);;
+  cursor: pointer;
+
+}
+
+.name{
+  display: inline-block;
+  vertical-align: text-bottom;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 0.8em;
+  margin-bottom: 8px;
+}
+
+.link {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.content {
+  padding: 8px;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(245, 255, 253);
+}
