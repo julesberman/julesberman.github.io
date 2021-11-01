@@ -7,14 +7,6 @@
   font-size: 14px;
 }
 
-.root {
-  padding: 32px;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-}
-
 embed {
   height: 100vh;
   width: 80vw;

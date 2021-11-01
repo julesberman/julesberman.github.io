@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="jmb" />
     <link rel="stylesheet" href="/reset.css">
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/all.css" />
+    <link rel="stylesheet" href="./index.css" />
   </head>
 
   <div class="bot-half"></div>
@@ -18,9 +19,9 @@
       Jules Berman
     </div>
     <div class="header">
-      <!-- <a class="link">Research</a> -->
-      <a class="link">CV</a>
-      <a class="link">Contact</a>
+      <a href="/" class="hlink">Home</a>
+      <a class="hlink">CV</a>
+      <a class="hlink">Contact</a>
     </div>
 
     <div class="content">
@@ -38,13 +39,31 @@
       One main objective is the processing of electron microscopy images taken of neurons at cellular resolutons.
       <div class="projects">
         <div class="project-title">Papers</div>
-        <div class="project"><a class="project-content">Point Clouds for Connectomics</a></div>
+        <div class="project">
+          <a class="project-link">Point Clouds for Connectomics</a>
+          <div>
+            This is research conducted at Flatiron Institue. We show the viability of point cloud based representations in the proofreading of 3D segmentaions generated EM images.
+            <br /><br />
+            This is a first step using Deep Geometric Learning methods to integrate information about the underlying non-euclidian geometries naturally present in connectomics data. 
+          </div>
+        </div>
+      </div> 
+      <div class="projects">
+        <div class="project-title">Projects</div>
+          <!-- <div class="project"><a class="project-link">Transformers for Neurite Segmentation</a></div> -->
+          <div class="project">
+            <a class="project-link">Deep Learning for PDEs</a> 
+            <div>
+              This is a graduate class review paper overviewing current developments and methods in the application of Deep Learning method in the solve of PDEs. We examine Neual Net based stencil approximations, Physics Informed Neural Networks (PINNs), and various formulations of Neural Operators.
+            </div>
+          </div>
+          <div class="project">
+            <a href="./projects/protein.html" class="project-link">Ensembled Protein Embeddings</a>
+            <div>
+              This is a graduate class research paper which examines ensemble methods applied to protein embeddings generated from unsupervised protein models. We show that a varitey of ensemble methods can meaningfully improve performance on downstream tasks. 
+            </div>
+          </div>  
         </div> 
-        <div class="projects">
-          <div class="project-title">Projects</div>
-          <!-- <div class="project"><a class="project-content">Transformers for Neurite Segmentation</a></div> -->
-          <div class="project"><a class="project-content">Deep Learning for PDEs</a></div>
-          <div class="project"><a href="./projects/protein.html" class="project-content">Semi-Supervised Protein Embeddings Models</a></div></div> 
         </div> 
       </div>   
   
