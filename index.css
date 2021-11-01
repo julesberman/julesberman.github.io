@@ -1,0 +1,104 @@
+@font-face {
+    font-family: "HK";
+    src: url(fonts/TTF/HKGrotesk-Regular.ttf) format("truetype");
+  }
+@font-face {
+  font-family: "HK-ExtraBold";
+  src: url(fonts/TTF/HKGrotesk-ExtraBold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "HK-Bold";
+  src: url(fonts/TTF/HKGrotesk-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "HK-SemiBold";
+  src: url(fonts/TTF/HKGrotesk-SemiBold.ttf) format("truetype");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "HK-Italic";
+  src: url(fonts/TTF/HKGrotesk-Italic.ttf) format("truetype");
+  font-weight: 800;
+}
+* {
+  font-family: "HK";
+  font-size: 14px;
+}
+
+.top-half{
+  position: absolute;
+  z-index: -1;
+  width: 100vw;
+  height: 128px;
+  background-color: whitesmoke
+}
+.bot-half{
+  position: absolute;
+  z-index: -2;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+}
+
+.root {
+  padding: 32px;
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  color: black
+}
+a:hover {
+  color: rgb(0, 255, 0);;
+  cursor: pointer;
+}
+
+.name{
+  display: inline-block;
+  vertical-align: text-bottom;
+  font-size: 24px;
+  font-family: "HK-Bold";
+  line-height: 0.8em;
+  margin-bottom: 8px;
+}
+
+.link {
+  font-weight: 600;
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.content {
+  padding: 8px;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+}
+.projects {
+  margin-top: 16px;
+}
+.project {
+  margin-bottom: 8px;
+}
+.project-title {
+  font-family: "HK-SemiBold";
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.project-content{
+  font-family: "HK-Italic";
+  font-size: 16px;
+  display: inline-block;
+}
+.project:hover {
+  border-color: rgb(0, 255, 0);;
+  cursor: pointer;
+}
