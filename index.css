@@ -23,7 +23,3 @@
   display: inline-block;
   margin-bottom: 8px;
 }
-.project:hover {
-  border-color: rgb(0, 255, 0);
-  cursor: pointer;
-}

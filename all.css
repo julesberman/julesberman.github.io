@@ -37,7 +37,7 @@
   z-index: -1;
   width: 100vw;
   height: 128px;
-  background-color: whitesmoke;
+  background-color: rgba(236,236,236);
 }
 .bot-half {
   position: absolute;
@@ -52,7 +52,7 @@ a {
   color: black;
 }
 a:hover {
-  color: rgb(0, 255, 0);
+  color: rgb(0, 0, 255);
   cursor: pointer;
 }
 
