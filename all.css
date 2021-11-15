@@ -22,7 +22,7 @@
 }
 * {
   font-family: "HK";
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .root {
@@ -59,7 +59,7 @@ a:hover {
 .name {
   display: inline-block;
   vertical-align: text-bottom;
-  font-size: 24px;
+  font-size: 32px;
   font-family: "HK-Bold";
   line-height: 0.8em;
   margin-bottom: 8px;
