@@ -5,20 +5,38 @@
   height: 100vh;
   background-color: white;
 }
-.projects {
+
+.papers {
   margin-top: 16px;
 }
+
 .project {
   margin-bottom: 8px;
 }
-.project-title {
+
+.heading {
   font-family: "HK-SemiBold";
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 4px;
 }
-.project-link {
+
+.paper-link {
   font-family: "HK-Italic";
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+.authors {
+  margin-left: 32px;
+  margin-bottom: 16px;
+}
+
+.info {
+  margin-left: 64px;
+
+}
+
+.me {
+  font-family: "HK-SemiBold"
 }

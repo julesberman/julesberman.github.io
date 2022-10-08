@@ -1,74 +1,89 @@
 <!doctype html>
 <html>
-  <head>
-    <meta name="description" content="jmb's research portfolio" />
-    <meta charset="utf-8" />
-    <title>jb</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="jmb" />
-    <link rel="stylesheet" href="/reset.css">
-    <link rel="stylesheet" href="/all.css" />
-    <link rel="stylesheet" href="./index.css" />
-  </head>
 
-  <div class="bot-half"></div>
-  <div class="top-half"></div>
+<head>
+  <meta name="description" content="jmb's research portfolio" />
+  <meta charset="utf-8" />
+  <title>jb</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="jmb" />
+  <link rel="stylesheet" href="/reset.css">
+  <link rel="stylesheet" href="/all.css" />
+  <link rel="stylesheet" href="./index.css" />
+</head>
 
-  <div class="root">
-    <div class="name">
-      Jules Berman
+<div class="bot-half"></div>
+<div class="top-half"></div>
+
+<div class="root">
+  <div class="name">
+    Jules Berman
+  </div>
+  <div class="header">
+    <a href="mailto:julesmichaelberman@gmail.com" class="hlink">Contact</a>
+    <a href="./files/Berman_CV.pdf" class="hlink">CV</a>
+    <!-- <a href="./files/Berman_Coursework.pdf" class="hlink">Coursework</a> -->
+    <a href="https://github.com/julesberman" class="hlink">Code</a>
+  </div>
+
+  <div class="content">
+    <div class="heading">Welcome!</div>
+    I am currently a Ph.D. student in Computer Science at NYU, Courant Institute of Mathematical Sciences. I am advised
+    by
+    <a href="https://cims.nyu.edu/~pehersto/">Benjamin Peherstorfer</a>.
+    We are currently focused on developing methods which make use of non-linear paramaterizations such as deep networks
+    to solve high dimensional partial differential equations.
+    <br />
+    <br />
+    Previously I was a Research Analyst at <a href="https://www.simonsfoundation.org/flatiron/">Flatiron Institute</a>
+    in New York City where I worked under <a href="https://scholar.google.com/citations?user=7Bgb5TUAAAAJ&hl=en">Dmitri
+      Chklovskii</a> in the Neural Circuts and Algorithms group within the Center for Computational Neuroscience.
+    <br />
+    <br />
+    Previous to graduate studies and scientific research, I was a Software Engineer for 3 years at <a
+      href="https://www.bloomberg.com/company/">Bloomberg LP</a>.
+    <div class="papers">
+      <div class="heading">Papers</div>
+      <a class="paper-link">Representational Dissimilarity Metric Spaces for
+        Stochastic Neural Networks</a><span class="info">[ In Review, ICLR 2023 ]</span>
+      <div class="authors">
+        L. Duong, J. Nassar, J. Zhou, <span class="me">J. Berman</span>, J. Olieslagers, A Williams
+      </div>
+      <a class="paper-link">Neuronal Temporal Filters as Dynamic Mode Extractor</a><span class="info">[ In Review, 2022
+        ]</span>
+      <div class="authors"><span class="me">J. Berman</span>, S. Golkar, S. Farashahi, D. Lipshutz, D.B. Chklovskii
+      </div>
+      <a href="https://arxiv.org/abs/2112.02039" class="paper-link">Bridging the Gap: Point Clouds for Merging
+        Neurons in Connectomics</a><span class="info">[ Published, MIDL 2022 ]</span>
+      <div class="authors"><span class="me">J. Berman</span>, J. Wu, D.B. Chklovskii</div>
     </div>
-    <div class="header">
-      <a href="mailto:julesmichaelberman@gmail.com" class="hlink">Contact</a>
-      <a href="./files/Berman_CV.pdf" class="hlink">CV</a>
-      <a href="./files/Berman_Coursework.pdf" class="hlink">Coursework</a>
-      <a href="https://github.com/julesberman" class="hlink">Code</a>
-    </div>
-
-    <div class="content">
-      <div class="project-title">Welcome!</div>
-
-      I am currently a Research Analyst at <a href="https://www.simonsfoundation.org/flatiron/">Flatiron Institute</a> in New York City where I work under 
-      <a href="https://scholar.google.com/citations?user=7Bgb5TUAAAAJ&hl=en">Dmitri Chklovskii</a> in the Neural Circuts and Algorithms group as part of the Center of Computational Neuroscience.
-      <br />
-      <br />
-      I am in my last semester of my M.S. in <a href="https://www.math.nyu.edu/dynamic/masters/ms-gsas/ms-scientific-computing/">Scientific Computing</a> 
-      within the Mathematics department at NYU's Courant Institute.
-      <br />
-      <br />
-      I was a Software Engineer for 3 years at <a href="https://www.bloomberg.com/company/">Bloomberg LP</a> , previous to persuing graduate research.
-      <div class="projects">
-        <div class="project-title">Papers</div>
-        <div class="project">
-          <a href="https://arxiv.org/abs/2112.02039" class="project-link">Bridging the Gap: Point Clouds for Merging Neurons in Connectomics</a>
-          <div>
-            This is my current research project conducted at Flatiron Institue. The paper is currently in review at <a href="https://2022.midl.io">MIDL 2022</a>.
-            <br />
-            <br />
-            We propose a novel method based on point cloud representations for merging disjoint neurons across large gaps in EM data. More generally, we aruge for the viability of point cloud based representations in the proofreading of 3D segmentaions generated EM images. This is a first step in using Geometric Deep Learning methods to integrate information about the underlying non-euclidean geometries naturally present in Connectomics data. 
-          </div>
+    <!-- <div class="projects">
+      <div class="project-title">Projects</div>
+      <div class="project">
+        <a href="./files/Deep_Learning_Methods_for_Solving_Partial_Differential_Equations.pdf" class="project-link">Deep
+          Learning for PDEs</a>
+        <div>
+          This is a review paper overviewing current methods in the application of Deep Learning method in solving PDEs.
+          We examine Neual Net based stencil approximations, Physics Informed Neural Networks (PINNs), and various
+          formulations of Neural Operators.
         </div>
-      </div> 
-      <div class="projects">
-        <div class="project-title">Projects</div>
-          <div class="project">
-            <a href="./files/Deep_Learning_Methods_for_Solving_Partial_Differential_Equations.pdf" class="project-link">Deep Learning for PDEs</a> 
-            <div>
-              This is a review paper overviewing current methods in the application of Deep Learning method in solving PDEs. We examine Neual Net based stencil approximations, Physics Informed Neural Networks (PINNs), and various formulations of Neural Operators.
-            </div>
-          </div>
-          <div class="project">
-            <a href="./files/Meta-Embeddings_for_Unsupervised_Protein_Models.pdf" class="project-link">Ensembled Protein Embeddings</a>
-            <div>
-              This is a research paper that examines ensemble methods applied to protein embeddings generated from unsupervised protein models. We show that a variety of ensemble methods can meaningfully improve performance on downstream tasks. This indicates that different unsupervised protein models learn complementary representations of proteins.
-            </div>
-          </div>  
-        </div> 
-        </div> 
-      </div>   
-  
-    </div>   
+      </div>
+      <div class="project">
+        <a href="./files/Meta-Embeddings_for_Unsupervised_Protein_Models.pdf" class="project-link">Ensembled Protein
+          Embeddings</a>
+        <div>
+          This is a research paper that examines ensemble methods applied to protein embeddings generated from
+          unsupervised protein models. We show that a variety of ensemble methods can meaningfully improve performance
+          on downstream tasks. This indicates that different unsupervised protein models learn complementary
+          representations of proteins.
+        </div>
+      </div> -->
+  </div>
+</div>
+</div>
 
- </div>
+</div>
+
+</div>
 
 </html>
