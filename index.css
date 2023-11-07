@@ -8,6 +8,7 @@
 
 .papers {
   margin-top: 16px;
+  max-width: 1000px;
 }
 
 .project {
@@ -33,7 +34,7 @@
 }
 
 .info {
-  margin-left: 64px;
+  float: right;
 
 }
 
