@@ -23,7 +23,7 @@
     {
       "id": 3,
       "title": "CoLoRA: Continuous low-rank adaptation for reduced neural modeling",
-      "image": "paper3.jpg",
+      "image": "vlasov.gif",
       "abstract": "This work introduces reduced models based on Continuous Low Rank Adaptation (CoLoRA) that pre-train neural networks for a given partial differential equation and then continuously adapt low-rank weights in time to rapidly predict the evolution of solution fields at new physics parameters and new initial conditions. The adaptation can be either purely data-driven or via an equation-driven variational approach that provides Galerkin-optimal approximations. Because CoLoRA approximates solution fields locally in time, the rank of the weights can be kept small, which means that only few training trajectories are required offline so that CoLoRA is well suited for data-scarce regimes. Predictions with CoLoRA are orders of magnitude faster than with classical methods and their accuracy and parameter efficiency is higher compared to other neural network approaches.",
       "publication": "ICML 2024",
       "authors": "J. Berman, B. Peherstorfer",
@@ -33,7 +33,7 @@
     {
       "id": 4,
       "title": "Randomized Sparse Neural Galerkin Schemes with Deep Networks",
-      "image": "paper3.jpg",
+      "image": "rsng.png",
       "abstract": "Training neural networks sequentially in time to approximate solution fields of time-dependent partial differential equations can be beneficial for preserving causality and other physics properties; however, the sequential-in-time training is numerically challenging because training errors quickly accumulate and amplify over time. This work introduces Neural Galerkin schemes that update randomized sparse subsets of network parameters at each time step. The randomization avoids overfitting locally in time and so helps prevent the error from accumulating quickly over the sequential-in-time training, which is motivated by dropout that addresses a similar issue of overfitting due to neuron co-adaptation. The sparsity of the update reduces the computational costs of training without losing expressiveness because many of the network parameters are redundant locally at each time step. In numerical experiments with a wide range of evolution equations, the proposed scheme with randomized sparse updates is up to two orders of magnitude more accurate at a fixed computational budget and up to two orders of magnitude faster at a fixed accuracy than schemes with dense updates.",
       "publication": "NeurIPS 2023 (Spotlight)",
       "authors": "J. Berman, B. Peherstorfer",

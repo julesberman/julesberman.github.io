@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         paperElement.innerHTML = `
           <div class="paper-content-wrapper">
             <div class="paper-image-container">
-              <img src="papers/${paper.image}" alt="${paper.title}" class="paper-image">
+              <img src="papers/${paper.image}" alt="${paper.title}" class="paper-image" >
             </div>
             <div class="paper-content">
               <div class="paper-header">
