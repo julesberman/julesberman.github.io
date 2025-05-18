@@ -261,6 +261,118 @@ a:hover {
   color: var(--paper-title-color, inherit);
 }
 
+/* ---------- Blog Styles ---------- */
+.blog-intro {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.blog-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.blog-post {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--separator-color);
+}
+
+.blog-post:last-child {
+  border-bottom: none;
+}
+
+.blog-post-date {
+  font-size: 0.9rem;
+  color: var(--dates-color);
+  margin-bottom: 0.5rem;
+}
+
+.blog-post-title {
+  font-family: "HK-SemiBold";
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+}
+
+.blog-post-excerpt {
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+/* Blog post content styles */
+.blog-content {
+  max-width: 800px;
+  line-height: 1.8;
+}
+
+.blog-content p {
+  margin-bottom: 1.5rem;
+}
+
+.blog-content h2 {
+  font-family: "HK-SemiBold";
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+}
+
+.blog-content h3 {
+  font-family: "HK-SemiBold";
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.blog-content ul, .blog-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-content code {
+  background-color: var(--card-bg-color);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.blog-content pre {
+  background-color: var(--card-bg-color);
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.blog-content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  border-radius: 5px;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid var(--separator-color);
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+
+.back-to-blog {
+  display: inline-block;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
 /* ---------- Form Elements ---------- */
 input,
 textarea,

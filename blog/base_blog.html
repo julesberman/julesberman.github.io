@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="description" content="Jules Berman's Blog" />
+  <meta charset="utf-8" />
+  <title>Jules Berman | Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="jmb" />
+  <link rel="stylesheet" href="/reset.css">
+  <link rel="stylesheet" href="/styles.css" />
+  <!-- Theme stylesheet (light.css or dark.css) -->
+  <link id="theme-style" rel="stylesheet" href="/light.css" />
+  <!-- Include Marked.js for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Include MathJax for LaTeX rendering -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <div class="root">
+    <div class="header-container">
+      <div class="left-section">
+        <div class="name">
+          Jules Berman
+        </div>
+        <div class="header">
+          <a href="/" class="hlink">Home</a><span class="header-separator">•</span>
+          <a href="mailto:julesmichaelberman@gmail.com" class="hlink">email</a><span class="header-separator">•</span>
+          <a href="https://scholar.google.com/citations?user=g44S1mAAAAAJ&hl=en" class="hlink">google scholar</a><span
+            class="header-separator">•</span>
+          <a href="/files/Berman_CV.pdf" class="hlink">CV</a><span class="header-separator">•</span>
+          <a href="/blog/index.html" class="hlink">blog</a>
+        </div>
+      </div>
+      <div class="theme-toggle-container">
+        <button id="theme-toggle" class="theme-toggle">Light Mode</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <a href="/blog/index.html" class="back-to-blog">← Back to Blog</a>
+
+      <div id="post-date" class="blog-post-date"></div>
+      <div id="post-title" class="heading"></div>
+
+      <div id="blog-content" class="blog-content">
+        <div class="loading">Loading post...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to load blog post content
+    async function loadBlogPost() {
+      // Get post ID from URL hash (e.g., #stochastic_lifting)
+      const postHash = window.location.hash.substring(1);
+
+      if (!postHash) {
+        // If no post hash is specified, redirect to blog index
+        window.location.href = '/blog/index.html';
+        return;
+      }
+
+      // Map URL hashes to markdown filenames
+      const postMap = {
+        'stochastic_lifting': 'stochastic_lifting',
+        'generative-models-physics': 'generative-models-physics',
+        'nyu-research-update': 'nyu-research-update'
+      };
+
+      // Get the markdown filename from the hash, or use the hash directly if not found in the map
+      const postId = postMap[postHash] || postHash;
+
+      try {
+        // Fetch the markdown file
+        const response = await fetch(`/blog/posts/${postId}.md`);
+
+        if (!response.ok) {
+          throw new Error('Post not found');
+        }
+
+        const markdown = await response.text();
+
+        // Configure marked to prevent it from processing LaTeX content
+        const renderer = new marked.Renderer();
+        const originalTextRenderer = renderer.text.bind(renderer);
+        renderer.text = (text) => {
+          // Don't process content within $ or $$ delimiters (LaTeX math)
+          return originalTextRenderer(text);
+        };
+
+        // Setup options for marked
+        const markedOptions = { 
+          renderer: renderer,
+          mangle: false, 
+          headerIds: false,
+          breaks: true 
+        };
+        
+        // Parse the markdown content
+        const rendered = marked.parse(markdown, markedOptions);
+
+        // Update the blog content
+        document.getElementById('blog-content').innerHTML = rendered;
+        
+        // Typeset the math after the content is loaded
+        if (window.MathJax) {
+          window.MathJax.typeset();
+        }
+
+        // Extract title and date from the markdown
+        const titleMatch = markdown.match(/^# (.+)$/m);
+        const dateMatch = markdown.match(/^\*\*(.+)\*\*$/m);
+
+        if (titleMatch && titleMatch[1]) {
+          document.getElementById('post-title').textContent = titleMatch[1];
+          document.title = `${titleMatch[1]} | Jules Berman`;
+        }
+
+        if (dateMatch && dateMatch[1]) {
+          document.getElementById('post-date').textContent = dateMatch[1];
+        }
+      } catch (error) {
+        console.error('Error loading blog post:', error);
+        document.getElementById('blog-content').innerHTML = `
+          <div class="error">
+            <h2>Post Not Found</h2>
+            <p>Sorry, the requested blog post could not be found.</p>
+            <p><a href="/blog/index.html">Return to Blog Index</a></p>
+          </div>
+        `;
+      }
+    }
+
+    // Load post when the page loads
+    document.addEventListener('DOMContentLoaded', loadBlogPost);
+
+    // Reload when the hash changes (if someone changes the URL)
+    window.addEventListener('hashchange', loadBlogPost);
+  </script>
+
+  <script src="/theme.js" defer></script>
+</body>
+
+</html>
