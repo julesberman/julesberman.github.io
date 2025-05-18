@@ -22,6 +22,8 @@
 }
 
 .paper-image-container {
+  box-shadow: inset 0px 0px 3px 0px #121212;
+  padding: 6px;
   width: 250px;
   height: 250px;
   overflow: hidden;
@@ -30,10 +32,10 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 1 / 1;
-  padding: 2px;
+
   box-sizing: border-box;
   background: #fff;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
 }
 
 .paper-image {
