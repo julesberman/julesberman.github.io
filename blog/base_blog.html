@@ -14,16 +14,13 @@
   <!-- Include Marked.js for Markdown parsing -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- Include MathJax for LaTeX rendering -->
-  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
-  <!-- <script>
+  <script>
     MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
     };
-  </script> -->
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
+  <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 
 <body>
@@ -48,7 +45,7 @@
     </div>
 
     <div class="content">
-      <a href="/blog/index.html" class="back-to-blog">← Back to Blog</a>
+
 
       <div id="post-date" class="blog-post-date"></div>
       <div id="post-title" class="heading"></div>
@@ -56,6 +53,7 @@
       <div id="blog-content" class="blog-content">
         <div class="loading">Loading post...</div>
       </div>
+      <a href="/blog/index.html" class="back-to-blog">← Back to Blog</a>
     </div>
   </div>
 
@@ -71,19 +69,10 @@
         return;
       }
 
-      // Map URL hashes to markdown filenames
-      const postMap = {
-        'stochastic_lifting': 'stochastic_lifting',
-        'generative-models-physics': 'generative-models-physics',
-        'nyu-research-update': 'nyu-research-update'
-      };
-
-      // Get the markdown filename from the hash, or use the hash directly if not found in the map
-      const postId = postMap[postHash] || postHash;
 
       try {
         // Fetch the markdown file
-        const response = await fetch(`/blog/posts/${postId}.md`);
+        const response = await fetch(`/blog/posts/${postHash}.md`);
 
         if (!response.ok) {
           throw new Error('Post not found');
@@ -126,6 +115,10 @@
         if (dateMatch && dateMatch[1]) {
           document.getElementById('post-date').textContent = dateMatch[1];
         }
+
+        if (window.MathJax) {
+          await MathJax.typesetPromise();
+        }
       } catch (error) {
         console.error('Error loading blog post:', error);
         document.getElementById('blog-content').innerHTML = `
@@ -144,13 +137,7 @@
     // Reload when the hash changes (if someone changes the URL)
     window.addEventListener('hashchange', loadBlogPost);
   </script>
-  <script>
-    // Typeset the math after the content is loaded
-    if (window.MathJax) {
-      window.MathJax.typeset();
-    }
 
-  </script>
 
   <script src="/theme.js" defer></script>
 </body>
