@@ -1,0 +1,22 @@
+/* Light Theme */
+:root {
+  --background-color: white;
+  --text-color: black;
+  --link-color: black;
+  --link-hover-color: rgb(0, 0, 255);
+  --header-bg-color: rgba(226, 226, 226);
+  --separator-color: #e2e8f0;
+  --paper-meta-color: #4a5568;
+  --paper-authors-color: #4a5568;
+  --publication-color: #000000;
+  --abstract-color: #4a5568;
+  --card-bg-color: white;
+  --dates-color: #666;
+  --paper-title-color: inherit;
+  --author-highlight-color: inherit;
+  --image-brightness: 1;
+  --input-bg-color: white;
+  --input-text-color: black;
+  --input-border-color: #e2e8f0;
+  --svg-fill-color: currentColor;
+}

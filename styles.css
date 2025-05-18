@@ -1,0 +1,325 @@
+/* 
+ * Consolidated CSS file for julesberman.github.io
+ * Combines all.css, main.css, and index.css
+ */
+
+/* ---------- Font Definitions ---------- */
+@font-face {
+  font-family: "HK";
+  src: url(fonts/TTF/HKGrotesk-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "HK-ExtraBold";
+  src: url(fonts/TTF/HKGrotesk-ExtraBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "HK-Bold";
+  src: url(fonts/TTF/HKGrotesk-Bold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "HK-SemiBold";
+  src: url(fonts/TTF/HKGrotesk-SemiBold.ttf) format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "HK-Italic";
+  src: url(fonts/TTF/HKGrotesk-Italic.ttf) format("truetype");
+  font-weight: 800;
+}
+
+/* ---------- Base Styles ---------- */
+* {
+  font-family: "HK";
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* ---------- Layout Structure ---------- */
+.root {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 64px;
+  display: flex;
+  flex-flow: column;
+}
+
+.content {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  background-color: var(--background-color);
+}
+
+/* ---------- Typography & Links ---------- */
+a {
+  text-decoration: none;
+  color: var(--link-color);
+  border-bottom: 1px solid currentColor;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  cursor: pointer;
+}
+
+.heading {
+  font-family: "HK-SemiBold";
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* ---------- Header & Navigation ---------- */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.name {
+  font-size: 1.75rem;
+  font-family: "HK-Bold";
+  line-height: 0.8em;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hlink {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.hlink:hover {
+  color: var(--link-hover-color);
+}
+
+.header-separator {
+  font-weight: bold;
+  margin: 0 0.25rem;
+  color: var(--text-color);
+}
+
+/* Theme Toggle */
+.theme-toggle-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid currentColor;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--header-bg-color);
+  text-decoration: none;
+}
+
+/* ---------- Experience Table ---------- */
+.experience-table {
+  width: 100%;
+  max-width: 600px;
+  border-spacing: 0;
+  border-collapse: separate;
+  table-layout: fixed;
+  margin-bottom: 1rem;
+}
+
+.experience-table td {
+  padding: 0.05rem 0;
+  vertical-align: top;
+}
+
+.experience-table .company {
+  width: 40px;
+  padding-right: 10px;
+}
+
+.experience-table .role {
+  width: 50px;
+  padding-right: 10px;
+}
+
+.experience-table .degree {
+  width: 60px;
+  padding-right: 10px;
+}
+
+.experience-table .institution {
+  width: 50px;
+  padding-right: 10px;
+}
+
+.experience-table .dates {
+  width: 50px;
+  text-align: left;
+  color: var(--dates-color);
+}
+
+.experience-table .advisor {
+  font-size: 0.9rem;
+  color: #555;
+  padding-top: 0;
+  padding-bottom: 1rem;
+}
+
+/* ---------- Publication Styles ---------- */
+.papers {
+  margin-top: 16px;
+  max-width: 1000px;
+}
+
+.project {
+  margin-bottom: 8px;
+}
+
+.paper-card {
+  background-color: var(--card-bg-color);
+}
+
+.paper-authors {
+  color: var(--paper-authors-color);
+}
+
+.paper-publication {
+  color: var(--publication-color);
+}
+
+.paper-abstract {
+  color: var(--abstract-color);
+}
+
+.abstract-toggle {
+  color: var(--link-color);
+  background-color: transparent;
+}
+
+.abstract-toggle:hover {
+  color: var(--link-hover-color);
+}
+
+.paper-link {
+  font-family: "HK-Italic";
+  display: inline-block;
+  margin-bottom: 4px;
+  color: var(--link-color) !important;
+}
+
+.paper-link:hover {
+  color: var(--link-hover-color) !important;
+}
+
+.authors {
+  margin-left: 32px;
+  margin-bottom: 16px;
+}
+
+.me {
+  font-family: "HK-SemiBold";
+}
+
+.info {
+  float: right;
+}
+
+/* ---------- Theme Specific Elements ---------- */
+.paper-image {
+  filter: brightness(var(--image-brightness, 1));
+}
+
+.author-highlight {
+  color: var(--author-highlight-color, inherit);
+}
+
+.paper-title {
+  color: var(--paper-title-color, inherit);
+}
+
+/* ---------- Form Elements ---------- */
+input,
+textarea,
+select,
+button {
+  background-color: var(--input-bg-color, inherit);
+  color: var(--input-text-color, inherit);
+  border-color: var(--input-border-color, inherit);
+}
+
+/* ---------- SVG Elements ---------- */
+svg {
+  fill: var(--svg-fill-color, currentColor);
+}
+
+/* ---------- Responsive Styles ---------- */
+@media (max-width: 768px) {
+  .root {
+    padding: 32px 48px;
+  }
+
+  .header-container {
+    padding-top: 2.5rem;
+  }
+
+  .left-section {
+    width: 100%;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .theme-toggle-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience-table {
+    font-size: 0.9rem;
+  }
+
+  .experience-table .company,
+  .experience-table .degree {
+    width: 40%;
+  }
+
+  .experience-table .role,
+  .experience-table .institution {
+    width: 30%;
+  }
+}
+
+@media (max-width: 480px) {
+  .root {
+    padding: 24px 32px;
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "papers": [
+    {
+      "id": 1,
+      "title": "Stochastic Lifting for One-Step Per-Frame Video Generation and Physics Simulation",
+      "image": "paper1.jpg",
+      "abstract": "We introduce Stochastic Lifting, which challenges the prevailing view that accurately generating video and stochastic physics simulations requires some form of dynamic or optimal transport, which is inherently slow. Stochastic Lifting augments training data samples with high-dimensional stochastic labels and then learns a transition map from the current frame and label to the next frame via a simple regression problem. Evaluating the regression map on a newly drawn label generates a sample, which results in one-step per-frame inference. The error of samples generated with Stochastic Lifting can be bounded in the (empirical) Wasserstein-2 metric if the regression map interpolates and is smooth. Stochastic Lifting achieves state-of-the-art accuracy on simulating trajectories of stochastic physics systems and video generation benchmarks among one-step methods. We also demonstrate the scalability and low inference costs by generating 32 frames of 480x480 videos in pixel space in under one second on a single H100 GPU.",
+      "publication": "NeurIPS 2025 (Under Review)",
+      "authors": "J. Berman, T. Blickhan, B. Peherstorfer",
+      "arxiv": "https://arxiv.org/abs/2505.12345",
+      "code": "https://github.com/julesberman/stochastic-lifting"
+    },
+    {
+      "id": 2,
+      "title": "Parametric model reduction of stochastic systems via higher-order action matching",
+      "image": "paper2.jpg",
+      "abstract": "The aim of this work is to learn models of population dynamics of physical systems that feature stochastic and mean-field effects and that depend on physics parameters. The learned models can act as surrogates of classical numerical models to efficiently predict the system behavior over the physics parameters. Building on the Benamou-Brenier formula from optimal transport and action matching, we use a variational problem to infer parameter- and time-dependent gradient fields that represent approximations of the population dynamics. The inferred gradient fields can then be used to rapidly generate sample trajectories that mimic the dynamics of the physical system on a population level over varying physics parameters. We show that combining Monte Carlo sampling with higher-order quadrature rules is critical for accurately estimating the training objective from sample data and for stabilizing the training process. We demonstrate on Vlasov-Poisson instabilities as well as on high-dimensional particle and chaotic systems that our approach accurately predicts population dynamics over a wide range of parameters and outperforms state-of-the-art diffusion-based and flow-based modeling that simply condition on time and physics parameters.",
+      "publication": "NeurIPS 2024",
+      "authors": "J. Berman, T. Blickhan, B. Peherstorfer",
+      "arxiv": "https://arxiv.org/abs/2410.12000",
+      "code": "https://github.com/julesberman/HOAM"
+    },
+    {
+      "id": 3,
+      "title": "CoLoRA: Continuous low-rank adaptation for reduced neural modeling",
+      "image": "paper3.jpg",
+      "abstract": "This work introduces reduced models based on Continuous Low Rank Adaptation (CoLoRA) that pre-train neural networks for a given partial differential equation and then continuously adapt low-rank weights in time to rapidly predict the evolution of solution fields at new physics parameters and new initial conditions. The adaptation can be either purely data-driven or via an equation-driven variational approach that provides Galerkin-optimal approximations. Because CoLoRA approximates solution fields locally in time, the rank of the weights can be kept small, which means that only few training trajectories are required offline so that CoLoRA is well suited for data-scarce regimes. Predictions with CoLoRA are orders of magnitude faster than with classical methods and their accuracy and parameter efficiency is higher compared to other neural network approaches.",
+      "publication": "ICML 2024",
+      "authors": "J. Berman, B. Peherstorfer",
+      "arxiv": "https://arxiv.org/abs/2402.14646",
+      "code": "https://github.com/julesberman/colora"
+    },
+    {
+      "id": 4,
+      "title": "Randomized Sparse Neural Galerkin Schemes with Deep Networks",
+      "image": "paper3.jpg",
+      "abstract": "Training neural networks sequentially in time to approximate solution fields of time-dependent partial differential equations can be beneficial for preserving causality and other physics properties; however, the sequential-in-time training is numerically challenging because training errors quickly accumulate and amplify over time. This work introduces Neural Galerkin schemes that update randomized sparse subsets of network parameters at each time step. The randomization avoids overfitting locally in time and so helps prevent the error from accumulating quickly over the sequential-in-time training, which is motivated by dropout that addresses a similar issue of overfitting due to neuron co-adaptation. The sparsity of the update reduces the computational costs of training without losing expressiveness because many of the network parameters are redundant locally at each time step. In numerical experiments with a wide range of evolution equations, the proposed scheme with randomized sparse updates is up to two orders of magnitude more accurate at a fixed computational budget and up to two orders of magnitude faster at a fixed accuracy than schemes with dense updates.",
+      "publication": "NeurIPS 2023 (Spotlight)",
+      "authors": "J. Berman, B. Peherstorfer",
+      "arxiv": "https://arxiv.org/abs/2310.04867",
+      "code": "https://github.com/julesberman/RSNG"
+    }
+  ]
+}

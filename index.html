@@ -8,72 +8,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="jmb" />
   <link rel="stylesheet" href="/reset.css">
-  <link rel="stylesheet" href="/all.css" />
-  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="./papers/papers.css" />
+  <!-- Theme stylesheet (light.css or dark.css) -->
+  <link id="theme-style" rel="stylesheet" href="/light.css" />
 </head>
 
-<div class="bot-half"></div>
-<div class="top-half"></div>
+
 
 <div class="root">
-  <div class="name">
-    Jules Berman
-  </div>
-  <div class="header">
-    <a href="mailto:julesmichaelberman@gmail.com" class="hlink">Contact</a>
-    <a href="./files/Berman_CV.pdf" class="hlink">CV</a>
-    <!-- <a href="./files/Berman_Coursework.pdf" class="hlink">Coursework</a> -->
-    <a href="https://github.com/julesberman" class="hlink">Code</a>
+  <div class="header-container">
+    <div class="left-section">
+      <div class="name">
+        Jules Berman
+      </div>
+      <div class="header">
+        <a href="mailto:julesmichaelberman@gmail.com" class="hlink">Contact</a><span class="header-separator">•</span>
+        <a href="./files/Berman_CV.pdf" class="hlink">CV</a><span class="header-separator">•</span>
+        <a href="https://github.com/julesberman" class="hlink">Code</a>
+      </div>
+    </div>
+    <div class="theme-toggle-container">
+      <button id="theme-toggle" class="theme-toggle">Light Mode</button>
+    </div>
   </div>
 
   <div class="content">
-    <div class="heading">Welcome!</div>
-    I am currently a Ph.D. student in Computer Science at NYU, Courant Institute of Mathematical Sciences. I am advised
-    by
-    <a href="https://cims.nyu.edu/~pehersto/">Benjamin Peherstorfer</a>.
-    I am currently focused on researching methods for nonlinear model reduction of high
-    dimensional time-dependent systems using neural networks and probabilistic transport models.
-    <br />
-    <br />
-    Previously I was a researcher at <a href="https://www.simonsfoundation.org/flatiron/">Flatiron Institute</a>
-    in New York City where I worked under <a href="https://scholar.google.com/citations?user=7Bgb5TUAAAAJ&hl=en">Dmitri
-      Chklovskii</a> in the Neural Circuts and Algorithms group within the Center for Computational Neuroscience.
-    <br />
-    <br />
-    Previous to graduate studies and scientific research, I was a Software Engineer for 3 years at <a
-      href="https://www.bloomberg.com/company/">Bloomberg LP</a>.
-    <!-- <div class="papers">
-      <div class="heading">Papers</div>
-      <a class="paper-link" href="https://arxiv.org/abs/2310.04867">Randomized Sparse Neural Galerkin Schemes with Deep
-        Networks</a><span class="info">Neurips 2023 [Spotlight]</span>
-      <div class="authors">
-        <span class="me">J. Berman</span>, B. Peherstorfer
-      </div>
-      <a class="paper-link" href="https://arxiv.org/abs/2211.11665">Representational Dissimilarity Metric Spaces for
-        Stochastic Neural Networks</a><span class="info">ICLR 2023 [Accepted]</span>
-      <div class="authors">
-        L. Duong, J. Nassar, J. Zhou, <span class="me">J. Berman</span>, J. Olieslagers, A Williams
-      </div>
-      <a class="paper-link" href="https://arxiv.org/abs/2310.07485">Nonlinear embeddings for conserving quantities
-        with Neural Galerkin schemes</a><span class="info">SISC 2023 [In Review]</span>
-      <div class="authors">
-        P. Schwerdtner, P. Schulze, <span class="me">J. Berman</span>, B. Peherstorfer
-      </div>
-      <a class="paper-link">Neuronal Temporal Filters as Normal Mode Extractors</a><span class="info">Phys.
-        Rev. Research 2022 [In Review]</span>
-      <div class="authors"><span class="me">J. Berman</span>, S. Golkar, S. Farashahi, D. Lipshutz, D.B. Chklovskii
-      </div>
-      <a href="https://arxiv.org/abs/2112.02039" class="paper-link">Bridging the Gap: Point Clouds for Merging
-        Neurons in Connectomics</a><span class="info">MIDL 2022 [Accepted]</span>
-      <div class="authors"><span class="me">J. Berman</span>, J. Wu, D.B. Chklovskii</div>
-    </div> -->
+    <div class="heading">About Me</div>
+    <p>I am a Ph.D. researcher in Computer Science at New York University's Courant Institute of Mathematical Sciences,
+      where I'm advised by <a href="https://cims.nyu.edu/~pehersto/">Benjamin Peherstorfer</a>. I specialize in
+      generative modeling with a focus on:</p>
+    <ul>
+      <li>Physics-based simulations</li>
+      <li>Video synthesis and generation techniques</li>
+      <!-- <li>Efficient model scaling for real-world applications</li> -->
+    </ul>
 
+    <p>My research bridges the gap between advanced generative modeling techniques and their applications in video
+      synthesis and PDE-based simulations. I've been recognized with the Harold Grad Memorial Prize and received the
+      Maccracken Fellowship for my work.</p>
+
+    <div class="heading" style="margin-top: 2rem;">Experience & Education</div>
+    <table class="experience-table">
+      <tr>
+        <td class="degree"><strong>Ph.D. in Computer Science</strong></td>
+        <td class="institution">NYU, Courant Institute</td>
+        <td class="dates">Expected June 2026</td>
+      </tr>
+      <tr>
+        <td class="degree"><strong>B.S. in Computer Science</strong></td>
+        <td class="institution">New York University</td>
+        <td class="dates">May 2017</td>
+      </tr>
+    </table>
+    <table class="experience-table">
+      <tr>
+        <td class="company"><a href="https://www.google.com/"><strong>Google</strong></a></td>
+        <td class="role">Research Engineer Intern</td>
+        <td class="dates">May 2025 - Aug 2025</td>
+      </tr>
+      <tr>
+        <td class="company"><a href="https://www.meta.com/"><strong>Meta</strong></a> CTRL-Labs</td>
+        <td class="role">Research Scientist Intern</td>
+        <td class="dates">May 2024 - Aug 2024</td>
+      </tr>
+      <tr>
+        <td class="company"><a href="https://www.simonsfoundation.org/flatiron/"><strong>Flatiron Institute</strong></a>
+        </td>
+        <td class="role">Research Analyst</td>
+        <td class="dates">May 2021 - Aug 2022</td>
+      </tr>
+      <tr>
+        <td class="company"><a href="https://www.bloomberg.com/company/"><strong>Bloomberg LP</strong></a></td>
+        <td class="role">Senior Software Engineer</td>
+        <td class="dates">April 2018 - April 2021</td>
+      </tr>
+    </table>
+
+
+    <div class="heading" style="margin-top: 2rem;">Selected Publications</div>
+    <div id="papers-container" class="papers-grid">
+      <!-- Papers will be loaded here by JavaScript -->
+      <div class="loading">Loading publications...</div>
+    </div>
   </div>
-</div>
-</div>
 
-</div>
-
+  <script src="./papers/papers.js" defer></script>
+  <script src="./theme.js" defer></script>
 </div>
 
 </html>
