@@ -14,14 +14,14 @@
   <!-- Include Marked.js for Markdown parsing -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- Include MathJax for LaTeX rendering -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script>
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <!-- <script>
     MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']]
       }
     };
-  </script>
+  </script> -->
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
   </script>
 </head>
@@ -113,10 +113,6 @@
         // Update the blog content
         document.getElementById('blog-content').innerHTML = rendered;
 
-        // Typeset the math after the content is loaded
-        if (window.MathJax) {
-          window.MathJax.typeset();
-        }
 
         // Extract title and date from the markdown
         const titleMatch = markdown.match(/^# (.+)$/m);
@@ -147,6 +143,13 @@
 
     // Reload when the hash changes (if someone changes the URL)
     window.addEventListener('hashchange', loadBlogPost);
+  </script>
+  <script>
+    // Typeset the math after the content is loaded
+    if (window.MathJax) {
+      window.MathJax.typeset();
+    }
+
   </script>
 
   <script src="/theme.js" defer></script>
