@@ -15,7 +15,15 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- Include MathJax for LaTeX rendering -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
 </head>
 
 <body>
@@ -92,19 +100,19 @@
         };
 
         // Setup options for marked
-        const markedOptions = { 
+        const markedOptions = {
           renderer: renderer,
-          mangle: false, 
+          mangle: false,
           headerIds: false,
-          breaks: true 
+          breaks: true
         };
-        
+
         // Parse the markdown content
         const rendered = marked.parse(markdown, markedOptions);
 
         // Update the blog content
         document.getElementById('blog-content').innerHTML = rendered;
-        
+
         // Typeset the math after the content is loaded
         if (window.MathJax) {
           window.MathJax.typeset();
