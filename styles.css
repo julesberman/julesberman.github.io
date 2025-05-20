@@ -116,30 +116,9 @@ a:hover {
 .header-separator {
   font-weight: bold;
   margin: 0 0.25rem;
-  color: var(--text-color);
+  color: var(--separator-color);
 }
 
-/* Theme Toggle */
-.theme-toggle-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.theme-toggle {
-  background: transparent;
-  border: 1px solid currentColor;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background-color: var(--header-bg-color);
-  text-decoration: none;
-}
 
 /* ---------- Experience Table ---------- */
 .experience-table {
@@ -323,7 +302,8 @@ a:hover {
   margin: 1.5rem 0 0.75rem;
 }
 
-.blog-content ul, .blog-content ol {
+.blog-content ul,
+.blog-content ol {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
 }
@@ -407,11 +387,7 @@ svg {
     gap: 1rem;
   }
 
-  .theme-toggle-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+
 }
 
 @media (max-width: 600px) {

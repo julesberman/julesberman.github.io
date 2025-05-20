@@ -14,9 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
       data.papers.forEach(paper => {
         const paperElement = document.createElement('div');
         paperElement.className = 'paper-card';
-        const arxivLink = paper.arxiv ? `<a href="${paper.arxiv}" class="paper-link arxiv-link" target="_blank">arXiv</a>` : '';
-        const codeLink = paper.code ? `<a href="${paper.code}" class="paper-link code-link" target="_blank">Code</a>` : '';
-        const linksHTML = (arxivLink || codeLink) ? `<div class="paper-links">${arxivLink} ${codeLink}</div>` : '';
+        const links = [];
+        if (paper.arxiv && paper.arxiv.trim() !== '') {
+          links.push(`<a href="${paper.arxiv.trim()}" class="paper-link arxiv-link" target="_blank">arXiv</a>`);
+        }
+        if (paper.code && paper.code.trim() !== '') {
+          links.push(`<a href="${paper.code.trim()}" class="paper-link code-link" target="_blank">Code</a>`);
+        }
+        const linksHTML = links.length > 0 ? `<div class="paper-links">${links.join(' ')}</div>` : '';
 
         paperElement.innerHTML = `
           <div class="paper-content-wrapper">

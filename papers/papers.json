@@ -6,9 +6,7 @@
       "image": "sl.gif",
       "abstract": "We introduce Stochastic Lifting, which challenges the prevailing view that accurately generating video and stochastic physics simulations requires some form of dynamic or optimal transport, which is inherently slow. Stochastic Lifting augments training data samples with high-dimensional stochastic labels and then learns a transition map from the current frame and label to the next frame via a simple regression problem. Evaluating the regression map on a newly drawn label generates a sample, which results in one-step per-frame inference. The error of samples generated with Stochastic Lifting can be bounded in the (empirical) Wasserstein-2 metric if the regression map interpolates and is smooth. Stochastic Lifting achieves state-of-the-art accuracy on simulating trajectories of stochastic physics systems and video generation benchmarks among one-step methods. We also demonstrate the scalability and low inference costs by generating 32 frames of 480x480 videos in pixel space in under one second on a single H100 GPU.",
       "publication": "NeurIPS 2025 (Under Review)",
-      "authors": "J. Berman, T. Blickhan, B. Peherstorfer",
-      "arxiv": "https://arxiv.org/abs/2505.12345",
-      "code": "https://github.com/julesberman/stochastic-lifting"
+      "authors": "J. Berman, T. Blickhan, B. Peherstorfer"
     },
     {
       "id": 2,
