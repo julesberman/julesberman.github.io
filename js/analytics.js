@@ -6,7 +6,7 @@ const isLocal = window.location.hostname === 'localhost' ||
                 window.location.protocol === 'file:';
 
 if (isLocal) {
-  console.debug('Analytics disabled for local development');
+  // console.debug('Analytics disabled for local development');
 } else {
   // Format current date and time in a human-readable format
 const formatTimestamp = () => {
@@ -52,7 +52,7 @@ const collectAndSendData = async () => {
       }
     } catch (ipError) {
       // Silently fail - we'll still send other data
-      console.debug('IP address not available:', ipError);
+      // console.debug('IP address not available:', ipError);
     }
 
     // Prepare form data with all collected information
@@ -73,7 +73,7 @@ const collectAndSendData = async () => {
       keepalive: true
     });
   } catch (error) {
-    console.debug('Analytics submission failed:', error);
+    // console.debug('Analytics submission failed:', error);
   }
 };
 
@@ -81,7 +81,7 @@ const collectAndSendData = async () => {
   document.addEventListener('DOMContentLoaded', function () {
   // Check if we've already logged a visit in this session
   if (sessionStorage.getItem('visitLogged')) {
-    console.debug('Visit already logged in this session');
+    // console.debug('Visit already logged in this session');
     return; // Exit if we've already logged a visit in this session
   }
   
@@ -90,7 +90,9 @@ const collectAndSendData = async () => {
   
   // Start the data collection process with a small delay
   setTimeout(() => {
-    collectAndSendData().catch(e => console.debug('Analytics error:', e));
+    collectAndSendData().catch(e => {
+      // console.debug('Analytics error:', e);
+    });
     }, 1000);
   });
 }
