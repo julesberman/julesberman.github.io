@@ -11,78 +11,8 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="./papers/papers.css" />
   <link rel="stylesheet" href="/light.css" />
-  <script>
-    // Visitor logging script with IP collection
-    document.addEventListener('DOMContentLoaded', function () {
-      // Wrap everything in a try-catch to prevent any errors from breaking the site
-      try {
-        // Start with basic visitor data that doesn't require async operations
-        const visitorData = {
-          timestamp: new Date().toISOString(),
-          userAgent: navigator.userAgent,
-          language: navigator.language,
-          screenWidth: window.screen.width,
-          screenHeight: window.screen.height,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          page: window.location.href,
-          referrer: document.referrer || 'direct',
-          ipAddress: 'unknown' // Will be updated if IP fetch succeeds
-        };
-
-        // Function to collect and send all data
-        const collectAndSendData = async () => {
-          try {
-            // Try to get IP address with a timeout to prevent hanging
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
-            
-            const ipResponse = await fetch('https://api.ipify.org?format=json', {
-              signal: controller.signal
-            }).finally(() => clearTimeout(timeoutId));
-            
-            if (ipResponse.ok) {
-              const ipData = await ipResponse.json();
-              if (ipData && ipData.ip) {
-                visitorData.ipAddress = ipData.ip;
-              }
-            }
-          } catch (ipError) {
-            // Silently fail - we'll still send other data
-            console.debug('IP address not available:', ipError);
-          }
-
-          // Prepare form data with all collected information
-          const formData = new FormData();
-          formData.append('access_key', 'd80263a9-d39e-4e9f-80b9-8825c06dda9a');
-          
-          // Add all visitor data to form
-          Object.entries(visitorData).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) {
-              formData.append(key, String(value));
-            }
-          });
-
-          // Send the data with error handling
-          try {
-            await fetch('https://api.web3forms.com/submit', {
-              method: 'POST',
-              body: formData,
-              keepalive: true
-            });
-          } catch (fetchError) {
-            console.debug('Analytics submission failed:', fetchError);
-          }
-        };
-
-        // Start the data collection process without awaiting
-        collectAndSendData().catch(e => console.debug('Analytics error:', e));
-        
-      } catch (error) {
-        // Catch any unexpected errors to ensure they don't affect the site
-        console.debug('Analytics initialization failed:', error);
-      }
-    });
-  </script>
+  <!-- External analytics script -->
+  <script src="/js/analytics.js" defer></script>
 </head>
 
 
