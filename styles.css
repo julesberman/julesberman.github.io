@@ -347,6 +347,14 @@ a:hover {
   margin: 1.5rem 0;
 }
 
+/* Make bold text more prominent in blog content */
+.blog-content strong,
+.blog-content b {
+  font-weight: 700;
+  font-family: "HK-Bold", "HK", sans-serif;
+  color: var(--text-color);
+}
+
 .back-to-blog {
   display: inline-block;
   margin-top: 2rem;

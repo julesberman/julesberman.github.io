@@ -14,32 +14,32 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- Include MathJax for LaTeX rendering -->
   <script>
-    MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    // Configure MathJax before it loads
+    window.MathJax = {
+      startup: {
+        pageReady: () => {
+          return MathJax.startup.defaultPageReady().then(() => {
+            // This will be called when MathJax is fully loaded
+            if (window.mathJaxReady) {
+              window.mathJaxReady();
+            }
+          });
+        }
+      },
+      tex: { 
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        processEscapes: true
+      }
     };
   </script>
-  <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
+  <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <!-- Header Component -->
+  <script src="/components/header-component.js"></script>
 </head>
 
 <body>
   <div class="root">
-    <div class="header-container">
-      <div class="left-section">
-        <div class="name">
-          Jules Berman
-        </div>
-        <div class="header">
-          <a href="/" class="hlink">Home</a><span class="header-separator">•</span>
-          <a href="mailto:julesmichaelberman@gmail.com" class="hlink">email</a><span class="header-separator">•</span>
-          <a href="https://scholar.google.com/citations?user=g44S1mAAAAAJ&hl=en" class="hlink">google scholar</a><span
-            class="header-separator">•</span>
-          <a href="/files/Berman_CV.pdf" class="hlink">CV</a><span class="header-separator">•</span>
-          <a href="/blog/index.html" class="hlink">blog</a>
-        </div>
-      </div>
-
-    </div>
+    <header-component current-page="blog"></header-component>
 
     <div class="content">
 
@@ -59,17 +59,17 @@
     async function loadBlogPost() {
       // Get post ID from URL hash (e.g., #stochastic_lifting)
       const postHash = window.location.hash.substring(1);
+      const postSlug = postHash || new URLSearchParams(window.location.search).get('post');
 
-      if (!postHash) {
-        // If no post hash is specified, redirect to blog index
+      if (!postSlug) {
+        // If no post is specified, redirect to blog index
         window.location.href = '/blog/index.html';
         return;
       }
 
-
       try {
         // Fetch the markdown file
-        const response = await fetch(`/blog/posts/${postHash}.md`);
+        const response = await fetch(`/blog/posts/${postSlug}.md`);
 
         if (!response.ok) {
           throw new Error('Post not found');
@@ -99,7 +99,6 @@
         // Update the blog content
         document.getElementById('blog-content').innerHTML = rendered;
 
-
         // Extract title and date from the markdown
         const titleMatch = markdown.match(/^# (.+)$/m);
         const dateMatch = markdown.match(/^\*\*(.+)\*\*$/m);
@@ -108,25 +107,45 @@
           document.getElementById('post-title').textContent = titleMatch[1];
           document.title = `${titleMatch[1]} | Jules Berman`;
         }
-
         if (dateMatch && dateMatch[1]) {
           document.getElementById('post-date').textContent = dateMatch[1];
         }
 
-        if (window.MathJax) {
-          await MathJax.typesetPromise();
-        }
+        // Typeset with MathJax - either immediately if loaded, or queue it
+        const typesetMath = () => {
+          if (window.MathJax && window.MathJax.typesetPromise) {
+            MathJax.typesetPromise().catch(err => console.error('MathJax typeset error:', err));
+          } else {
+            console.warn('MathJax not fully loaded yet, will retry...');
+            setTimeout(typesetMath, 100);
+          }
+        };
+        
+        // Start the typesetting process
+        typesetMath();
       } catch (error) {
         console.error('Error loading blog post:', error);
         document.getElementById('blog-content').innerHTML = `
           <div class="error">
-            <h2>Post Not Found</h2>
-            <p>Sorry, the requested blog post could not be found.</p>
+            <h2>Error Loading Post</h2>
+            <p>Sorry, there was an error loading the requested blog post.</p>
+            <p>${error.message}</p>
             <p><a href="/blog/index.html">Return to Blog Index</a></p>
           </div>
         `;
       }
     }
+
+    // Handle link clicks to prevent full page reload
+    document.addEventListener('click', function (event) {
+      const link = event.target.closest('a[data-post]');
+      if (link) {
+        event.preventDefault();
+        const postSlug = link.getAttribute('data-post');
+        window.location.hash = postSlug;
+        loadBlogPost();
+      }
+    });
 
     // Load post when the page loads
     document.addEventListener('DOMContentLoaded', loadBlogPost);

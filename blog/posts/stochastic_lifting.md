@@ -4,162 +4,98 @@
 
 ---
 
-> Stochastic Lifting (SL) turns next-frame video and physics-trajectory generation into a *simple regression* problem by randomly “lifting’’ every frame into a higher-dimensional space.  A single neural-network evaluation per frame then suffices to sample new trajectories that match ground-truth distributions in Wasserstein-2 distance—without diffusion-style multi-step transport.
+> Stochastic Lifting (SL) turns next-frame video and physics-trajectory generation into a simple regression problem by randomly labeling frames with high-dimensional Gaussian labels. We show this "lifting" into a high-dimensional space, along with the strong relationship between successive frames, gives a sufficiently regular coupling to learn a generalizable transport map. Thus a single neural-network evaluation per frame then suffices to sample new trajectories—avoiding an expensive rearrangement step (i.e optimal transport) or an expensive multi-step dynamic transport process (i.e. diffusion models).
+
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <img src="/blog/posts/sl_1.gif" alt="Stochastic Lifting" width="200">
+  <img src="/blog/posts/sl_1.gif" alt="Stochastic Lifting" width="200">
+  <img src="/blog/posts/sl_1.gif" alt="Stochastic Lifting" width="200">
+</div>
 
 ---
 
 ## 1 Motivation
 
-Modern generative models (score-based diffusion, normalizing flows, autoregressive diffusion, …) learn **multi-step transports** that move a *reference* distribution (usually noise) to data distributions \[sohl-dickstein ±15; Song ±20; Albergo ±23].
-While powerful, these *rearrangement* procedures are:
+Modern generative models (flow-based, diffusion-based) learn multi-step transformations that transport a reference distribution (usually noise) to data distributions. For sampling from static distrubtions, such as in image generation, this multi-step process is computationally tractable as it only need to be run once per sample.
 
-* **Slow at inference**—each frame may need tens–thousands of NN calls.
-* **Overkill for sequential data** (videos, stochastic PDEs) where a **strong natural coupling** already exists between successive frames $(\mathbf x_t,\mathbf x_{t+1})$.
+For time-varying distributions, such as those found in physics simulation and video generation, auto-regressive diffusion models (ARDMs) proceed sequentially by sampling a new frame from a distributions conditioned on the previous frame, $\boldsymbol x_{t+1}\sim\rho(\cdot\mid \boldsymbol x_{t})$. 
 
-The key question: *Can we skip the expensive transport and still generate diverse, realistic next frames in one step?*
-*Stochastic Lifting says yes.*
+Thus the multi-step process must be run once per frame, making accurate long term generation computationally intractable.
 
 ---
 
-## 2 Problem Setup
+This paper asks a provocative question: **is the complexity of multi-step transport actually necessary for video generation?**
 
-Let
+The conventional wisdom suggests yes—videos are higher-dimensional than images and inutively more complex, thus the additioal computatioal burden aligns with our intuition. But video generation has a unique property that other generation tasks lack: extremely strong conditioning from frame to frame.
 
-$$
-\{\mathbf X_t\}_{t=0}^{T}\subset\mathcal X:=[0,1]^n,\qquad
-\mathbf X_0\sim\rho_0
-$$
+Unlike generating unrelated images, consecutive video frames share a large part of their content. The transition from $\boldsymbol{x_t}$ to $\boldsymbol{x_{t+1}}$ involves small, localized changes:
+- Objects move slightly
+- Lighting changes gradually  
+- New elements enter smoothly from frame boundaries
 
-evolve via the **time-stationary** conditional law
+This suggests the source distribution (current frame) and target distribution (next frame) are already close in a meaningful sense. Thus it might be reasonable to expect that we can learn a one-step map from the current frame to the next frame: $F(\boldsymbol x_t) = \boldsymbol x_{t+1}$.
 
-$$
-\boxed{\mathbf X_{t+1}\mid \mathbf X_t=\mathbf x_t\sim\rho(\cdot\mid \mathbf x_t)} \tag{1}
-$$
-
-
-**Goal** Learn a map $F:\mathcal X\times\mathbb R^{d}\to\mathcal X$ s.t.
-
-$$
-\hat{\mathbf x}_{t+1}=F(\mathbf x_t,\boldsymbol\xi_t),\qquad
-\boldsymbol\xi_t\stackrel{\text{i.i.d.}}{\sim}\mathcal N(0,I_d),
-$$
-
-approximates the law of $\mathbf X_{t+1}$.  Rolling $F$ autoregressively produces complete trajectories with **one forward pass per frame**.
-
----
-
-## 3 Why a Naïve Regressor Fails
-
+## 3 A Naïve One-Step Map Fails
+   ![one-to-many](/blog/posts/lifting_tikz.png)
 1. **One-to-Many ambiguity**
-   In stochastic dynamics the same $\mathbf x_t$ can lead to *many* valid $\mathbf x_{t+1}$.
+   In stochastic dynamics the same $\boldsymbol x_t$ can lead to *many* different realizations of $\boldsymbol x_{t+1}$ (i.e. no *function* can exist which fits the data). Even if we consider two different but very close $\boldsymbol x_t$ and $\boldsymbol x_t'$, any reasonable smooth parametrization (such as a neural network) will not be able to fit the data.
 
-   > ![one-to-many](figures/one_to_many.png)
 2. **Deterministic collapse**
-   Minimizing MSE on $\mathcal D$ forces $F$ toward
-   $\mathbb E[\mathbf X_{t+1}\mid\mathbf X_t=\mathbf x_t]$
-   → blurs stochastic diversity.
+   In particular, minimizing a naïve MSE via  $||F(\boldsymbol{x_t})-\boldsymbol{x_{t+1}}||_2^2$
 
----
-
-## 4 Stochastic Lifting
-
-### 4.1 Random Labels *Lift* the Data
-
-Augment every pair with an independent Gaussian label:
-
-$$
-\mathcal D_\xi=\Bigl\{(\mathbf x_t^{i},\mathbf x_{t+1}^{i},\boldsymbol\xi_t^{i})\Bigr\},
-\qquad \boldsymbol\xi_t^{i}\sim\mathcal N(0,I_d).
-$$
-
-Because labels are *almost surely unique*, the mapping problem becomes *one-to-one*:
-
-$$
-F(\mathbf x_t^{i},\boldsymbol\xi_t^{i})=\mathbf x_{t+1}^{i}. \tag{2}
-$$
-
-### 4.2 High Dimensionality ⇒ Smooth Interpolants
-
-The Lipschitz constant necessary to fit (2) on the dataset is
-
-$$
-L(\mathcal D_\xi)=\max_{i\neq j,t}
-\frac{\|\mathbf x_{t+1}^{i}-\mathbf x_{t+1}^{j}\|_2}
-     {\sqrt{\|\mathbf x_t^{i}-\mathbf x_t^{j}\|_2^{2}
-            +\|\boldsymbol\xi_t^{i}-\boldsymbol\xi_t^{j}\|_2^{2}}}.
-$$
-
-Labels lie on $\mathbb S^{d-1}$; inner products scale like $1/\sqrt d$ \[Vershynin 18].
-Hence $L(\mathcal D_\xi)=\mathcal O\bigl(1/\sqrt d\bigr)$—**larger $d$ ⇒ smoother $F$**, which generalizes better.
-
-### 4.3 Training Objective
-
-$$
-\boxed{
-\mathcal L(\theta)=\frac1{MT}\sum_{i,t}
-\bigl\|F_\theta(\mathbf x_t^{i},\boldsymbol\xi_t^{i})
-      -\mathbf x_{t+1}^{i}\bigr\|_2^{2}}
-\tag{3}
-$$
-
-(Replace with BCE for binary data.)
-We use a plain U‑Net backbone; the diffusion‑time channel is repurposed for $\boldsymbol\xi_t$.
-
-### 4.4 One-Step Inference
-
-```text
-for t = 0 … T-1:
-    ξ_t  ~  N(0,I_d)
-    x_{t+1} = F_θ(x_t, ξ_t)
-```
-
-One NN call.  **No diffusion steps, no distillation, no latent decoder.**
-
----
-
-## 5 Theory:  Wasserstein‑2 Error Bound
-
-> **Proposition 1**
-> Let $F$ satisfy (2) and be $L_F$-Lipschitz.  Let
-> $\hat\rho_{t+1}$ be the empirical law of generated samples
-> and $\tilde\rho_{t+1}$ that of unseen test pairs. Then
->
-> $$
-> \mathbb E\bigl[W_2^{2}(\hat\rho_{t+1},\tilde\rho_{t+1})\bigr]
-> \leC\bigl(1+2L_F^{2}\bigr)
-> \min(M,\tilde M)^{-2/\alpha},
-> $$
->
-> where $\alpha$ is the intrinsic dimension of the largest of
-> $\rho_t,\rho_{t+1},\nu$.
-
-**Corollary** If $F(\mathbf x,\boldsymbol\xi)=\mathbf x+\mathrm dtR(\mathbf x,\boldsymbol\xi)$ (Euler‑like update) the bound scales as $L_R\mathrm dt$—good news because adjacent video frames differ by small $\mathrm dt$.
-
----
-
-## 6 Experiments
+   forces $F$ toward $\mathbb E[\mathbf X_{t+1}\mid\mathbf X_t=\boldsymbol x_t]$. That is we learn the mean dynamic, rather than the stochastic one.
 
 
-### 6.1 Findings
 
-* SL matches or beats ARDMs needing up to **40×** more calls.
-* After a threshold ($d\gtrsim128$) accuracy is **robust** to label dimension.
-* Removing current‑frame conditioning collapses performance ⇒ coupling is essential.
+## 4 The Stochastic Lifting Solution
 
----
+This one-to-many problems motaivates the **stochastic lifting** solution. We resolve the one-to-many ambiguity by augmenting the training data with high-dimensional stochastic labels.
 
-## 7 Limitations & Future Work
+1. For each pair $(\boldsymbol{x_t^i}, \boldsymbol{x_{t+1}^i})$, assign label $\boldsymbol{\xi_t^i} \sim \mathcal N(0, I_d)$
 
-1. Fails for noise→data tasks; needs previous frame.
-2. Very large $d$ may demand more data—scaling laws open.
-3. Extending theory to non‑Lipschitz nets & multi‑frame conditioning is future work.
+2. Learn regression map $F_\theta$ that interpolates by minimizing: $$L(\theta)=\frac1{MT}\sum_{i=1}^{M}\sum_{t=0}^{T-1}||F_\theta\bigl(\boldsymbol{x_t^i},\boldsymbol{\xi_t^i} \bigr)-\boldsymbol{x_{t+1}^i}\||_2^2.$$
 
----
+3. Generate new samples by evaluating $F_\theta$ with fresh labels:
+$ \boldsymbol{x ̃_{t+1}} = F_\theta(\boldsymbol{x_t}, \boldsymbol{\xi_t})$ where $\boldsymbol{\xi_t} \sim \mathcal N(0, I_d)$
 
-## 8 Takeaways
+## 5 How is this possible?
 
-Random high‑dimensional labels + frame conditioning + plain regression
-→ **real‑time one‑step generation** of videos & stochastic PDE trajectories *without* dynamic transport.
+At first glance, it is unclear why stochastic lifting would work. We take an under-determined system and add inputs which are (by design) totally independent from the output. Intuitively, because the labels contain no information about the output, the network should ignore them. Yet in practice, the network not only learn a function which depends on the the labels $\boldsymbol{\xi_t}$, but one that also meaningfully generalizes in a distributional sense when evulated on new labels $\boldsymbol{\xi_t'}$.
+
+Our key insight is that if our function both **interpolates** and is **smooth**, then we can expect it to generate samples that are close to the true distribution. In paticular see proposition 1 in the paper:
+
+$$WWW$$
+
+How does stochastic lifting enable smoothness and interpolation?
+
+1. **Random labels allow for interpolation**: By assigning unique high-dimensional labels to training data, we convert the one-to-many mapping problem into a well-posed regression problem. This allows us to interpolate the data.
+
+2. **High dimensions enable smoothness**: Lifting to higher dimensions makes interpolation easier and ensures $F$ is smoother (lower Lipschitz constants).
+
+3. **Frame conditioning provides structure**: The strong conditioning from $\boldsymbol x_t$ means we don't need to learn transport from arbitrary distributions. From a smoothness perspective the fact that $\boldsymbol x_t$ is close to $\boldsymbol x_{t+1}$ means our interpolating $F$ is smooth.
+
+
+
+
+## Empirical Evaluation
+<div style="display: flex; justify-content: center; gap: 10px;">
+  <img src="/blog/posts/SI_fvd.png" alt="fvd" width="350">
+  <img src="/blog/posts/qoi.png" alt="qoi" width="200">
+</div>
+
+ - Physics roll‐outs (wave equation, two‐phase flow): one‐step Stochastic Lifting matches or surpasses 40‐step diffusion baselines in matching the distrubition of physical quantites of interest.
+
+ - BAIR robot‐pushing (64×64): Fréchet Video Distance (FVD) = 74.8—best among all published single‐step models and within 5 % of multi‐step diffusions.
+
+ - Scalability: Generates 32 frames of 480×480 video in 0.96 s on a single H100 GPU.
+
+ ## 8   Limitations and Future Work
+
+The results may seem too good to be true. Does this mean we can simply fit a neural network directly with uncoupled noise to data and expect it to generalize?
+
+The answer is no. We critically build on the strong coupling given by the pair of current and next frame in the training data. Importantly, as stated before, this strong coupling ensures that an interpolating map will also be smooth. 
+
+If the source and the target distributions are "far apart" (as in image generation) then the interpolating map will necessarily be irregular. This means, for example, that Stochastic Lifting fails when aiming to directly learn a map from noise to images. 
 
 ---
 

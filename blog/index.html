@@ -11,27 +11,13 @@
   <link rel="stylesheet" href="/styles.css" />
   <!-- Theme stylesheet (light.css or dark.css) -->
   <link id="theme-style" rel="stylesheet" href="/light.css" />
+  <!-- Header Component -->
+  <script src="/components/header-component.js"></script>
 </head>
 
 <body>
   <div class="root">
-    <div class="header-container">
-      <div class="left-section">
-        <div class="name" style="cursor: pointer;" onclick="window.location.href='/';">
-          Jules Berman
-        </div>
-        <div class="header">
-          <a href="mailto:julesmichaelberman@gmail.com" class="hlink">email</a><span class="header-separator">•</span>
-          <a href="https://scholar.google.com/citations?user=g44S1mAAAAAJ&hl=en" class="hlink">google scholar</a><span
-            class="header-separator">•</span>
-          <a href="/files/Berman_CV.pdf" class="hlink">CV</a><span class="header-separator">•</span>
-          <a href="/blog/index.html" class="hlink">blog</a>
-        </div>
-      </div>
-      <div class="theme-toggle-container">
-        <button id="theme-toggle" class="theme-toggle">Light Mode</button>
-      </div>
-    </div>
+    <header-component current-page="blog"></header-component>
 
     <div class="content">
       <!-- <div class="heading">Blog</div>
@@ -44,7 +30,7 @@
 
         <div class="blog-post">
           <div class="blog-post-date">April 22, 2025</div>
-          <a href="/blog/base_blog.html#stochastic_lifting" class="blog-post-title">
+          <a href="/blog/base_blog.html#stochastic_lifting" class="blog-post-title" data-post="stochastic_lifting">
             Stochastic Lifting for Video Synthesis
           </a>
           <p class="blog-post-excerpt">
