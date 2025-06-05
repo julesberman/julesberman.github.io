@@ -14,7 +14,7 @@
 
 ---
 
-## 1 Motivation
+## Motivation
 
 Modern generative models (flow-based, diffusion-based) learn multi-step transformations that transport a reference distribution (usually noise) to data distributions. For sampling from static distrubtions, such as in image generation, this multi-step process is computationally tractable as it only need to be run once per sample.
 
@@ -35,7 +35,7 @@ Unlike generating unrelated images, consecutive video frames share a large part 
 
 This suggests the source distribution (current frame) and target distribution (next frame) are already close in a meaningful sense. Thus it might be reasonable to expect that we can learn a one-step map from the current frame to the next frame: $F(\boldsymbol x_t) = \boldsymbol x_{t+1}$.
 
-## 3 A Naïve One-Step Map Fails
+## A Naïve One-Step Map Fails
    ![one-to-many](/blog/posts/lifting_tikz.png)
 1. **One-to-Many ambiguity**
    In stochastic dynamics the same $\boldsymbol x_t$ can lead to *many* different realizations of $\boldsymbol x_{t+1}$ (i.e. no *function* can exist which fits the data). Even if we consider two different but very close $\boldsymbol x_t$ and $\boldsymbol x_t'$, any reasonable smooth parametrization (such as a neural network) will not be able to fit the data.
@@ -47,7 +47,7 @@ This suggests the source distribution (current frame) and target distribution (n
 
 
 
-## 4 The Stochastic Lifting Solution
+## The Stochastic Lifting Solution
 
 This one-to-many problems motaivates the **stochastic lifting** solution. We resolve the one-to-many ambiguity by augmenting the training data with high-dimensional stochastic labels.
 
@@ -58,7 +58,7 @@ This one-to-many problems motaivates the **stochastic lifting** solution. We res
 3. Generate new samples by evaluating $F_\theta$ with fresh labels:
 $ \boldsymbol{x ̃_{t+1}} = F_\theta(\boldsymbol{x_t}, \boldsymbol{\xi_t})$ where $\boldsymbol{\xi_t} \sim \mathcal N(0, I_d)$
 
-## 5 How is this possible?
+## How is this possible?
 
 At first glance, it is unclear why stochastic lifting would work. We take an under-determined system and add inputs which are (by design) totally independent from the output. Intuitively, because the labels contain no information about the output, the network should ignore them. Yet in practice, the network not only learn a function which depends on the the labels $\boldsymbol{\xi_t}$, but one that also meaningfully generalizes in a distributional sense when evulated on new labels $\boldsymbol{\xi_t'}$.
 
@@ -74,9 +74,6 @@ How does stochastic lifting enable smoothness and interpolation?
 
 3. **Frame conditioning provides structure**: The strong conditioning from $\boldsymbol x_t$ means we don't need to learn transport from arbitrary distributions. From a smoothness perspective the fact that $\boldsymbol x_t$ is close to $\boldsymbol x_{t+1}$ means our interpolating $F$ is smooth.
 
-
-
-
 ## Empirical Evaluation
 <div style="display: flex; justify-content: center; gap: 10px;">
   <img src="/blog/posts/SI_fvd.png" alt="fvd" width="350">
@@ -89,7 +86,7 @@ How does stochastic lifting enable smoothness and interpolation?
 
  - Scalability: Generates 32 frames of 480×480 video in 0.96 s on a single H100 GPU.
 
- ## 8   Limitations and Future Work
+ ## Limitations and Future Work
 
 The results may seem too good to be true. Does this mean we can simply fit a neural network directly with uncoupled noise to data and expect it to generalize?
 
