@@ -26,7 +26,7 @@
           });
         }
       },
-      tex: { 
+      tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         processEscapes: true
       }
@@ -43,9 +43,6 @@
 
     <div class="content">
 
-
-      <div id="post-date" class="blog-post-date"></div>
-      <div id="post-title" class="heading"></div>
 
       <div id="blog-content" class="blog-content">
         <div class="loading">Loading post...</div>
@@ -99,18 +96,6 @@
         // Update the blog content
         document.getElementById('blog-content').innerHTML = rendered;
 
-        // Extract title and date from the markdown
-        const titleMatch = markdown.match(/^# (.+)$/m);
-        const dateMatch = markdown.match(/^\*\*(.+)\*\*$/m);
-
-        if (titleMatch && titleMatch[1]) {
-          document.getElementById('post-title').textContent = titleMatch[1];
-          document.title = `${titleMatch[1]} | Jules Berman`;
-        }
-        if (dateMatch && dateMatch[1]) {
-          document.getElementById('post-date').textContent = dateMatch[1];
-        }
-
         // Typeset with MathJax - either immediately if loaded, or queue it
         const typesetMath = () => {
           if (window.MathJax && window.MathJax.typesetPromise) {
@@ -120,7 +105,7 @@
             setTimeout(typesetMath, 100);
           }
         };
-        
+
         // Start the typesetting process
         typesetMath();
       } catch (error) {
