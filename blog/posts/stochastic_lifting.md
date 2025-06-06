@@ -1,15 +1,26 @@
 ## Stochastic Lifting for One-Step Per-Frame Video Generation and Physics Simulations
 *By J. Berman, T. Blickhan, B. Peherstorfer*
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: space-between;">
 <video width="480" height="480" autoplay muted loop>
   <source src="/blog/posts/polar_all.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
+<div style="display: flex; flex-direction: column; justify-content: space-between;">
+<video width="230" height="230" autoplay muted loop>
+  <source src="/blog/posts/wave33.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<video width="230" height="230" autoplay muted loop>
+  <source src="/blog/posts/flow33.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 </div>
-<div style="display: flex; justify-content: center; margin-top: 10px;">
-<span style="font-size: 14.5px">Stochastic Lifting generates 32 frames of 480 × 480 color
+</div>
+<div style="display: flex;  flex-direction: column;  margin-top: 10px;">
+<span style="font-size: 14px"><span style="font-size: 14px; font-weight: bold">Left:</span> Stochastic Lifting generates 32 frames of 480 × 480 color
 video directly in pixel space in just 0.96 seconds on a single H100.</span>
+<span style="font-size: 14px"><span style="font-size: 14px; font-weight: bold">Right:</span> Stochastic Lifting produces diverse samples for stochastic physics simulations starting from identical initial conditions.</span>
 </div>
 <!-- <div style="display: flex; justify-content: center; gap: 20px;">
   <img src="/blog/posts/sl_1.gif" alt="Stochastic Lifting" width="200">
