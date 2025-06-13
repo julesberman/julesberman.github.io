@@ -11,55 +11,105 @@
     <main id="content"></main>
 
     <script>
-        /* ---------------------------------------------
-           Hard-coded configuration
-        --------------------------------------------- */
-        const DIRS = ['wave', 'flow', 'polar', 'bair', 'clevrer']; // display order
-        const BASE_PATH = 'sl_vids/';   // parent folder
-        const FIRST_IDX = 0;            // first clip number
-        const LAST_IDX = 11;           // last  clip number (inclusive)
+        /* -------------------------------------------------
+           Hard-coded folder list and file numbering
+        ------------------------------------------------- */
+        const DIRS = ['wave', 'flow', 'polar', 'bair', 'clevrer']; // order on the page
+        const BASE_PATH = 'sl_vids/';  // parent folder
+        const FIRST = 0;           // first clip number
+        const LAST = 11;          // last  clip number (inclusive)
 
-        function buildVideoWall() {
-            const container = document.getElementById('content');
+        /* -------------------------------------------------
+           Build the static DOM (no network requests yet)
+        ------------------------------------------------- */
+        function buildDOM() {
+            const main = document.getElementById('content');
 
             DIRS.forEach(dir => {
-                /* SECTION & HEADING */
                 const section = document.createElement('section');
                 section.className = 'directory';
 
-                const heading = document.createElement('h2');
-                heading.textContent = dir;
-                section.appendChild(heading);
+                const h2 = document.createElement('h2');
+                h2.textContent = dir;
+                section.appendChild(h2);
 
-                /* GRID */
                 const grid = document.createElement('div');
                 grid.className = 'video-grid';
 
-                for (let i = FIRST_IDX; i <= LAST_IDX; i++) {
-                    const src = `${BASE_PATH}${dir}/${i}.mp4`;
-
+                for (let i = FIRST; i <= LAST; i++) {
                     const video = document.createElement('video');
-                    video.src = src;
-                    video.autoplay = true;
-                    video.muted = true;
+
+                    /* store src for later lazy-load */
+                    video.dataset.src = `${BASE_PATH}${dir}/${i}.mp4`;
+
+                    video.muted = true;        // required for mobile autoplay
                     video.loop = true;
                     video.playsInline = true;
-                    video.controls = false;
+                    video.preload = 'metadata';  // tiny initial fetch
 
-                    /* If a clip is missing, quietly drop its tile */
+                    /* if the file is genuinely missing, just remove tile */
                     video.addEventListener('error', () => video.remove());
 
                     grid.appendChild(video);
                 }
 
                 section.appendChild(grid);
-                container.appendChild(section);
+                main.appendChild(section);
             });
         }
 
+        /* -------------------------------------------------
+           Lazy-load & autoplay when visible
+        ------------------------------------------------- */
+        function setupLazyPlayback() {
+            const opts = { rootMargin: '200px', threshold: 0.1 };
+            const io = 'IntersectionObserver' in window
+                ? new IntersectionObserver(onIntersect, opts)
+                : null;
+
+            document.querySelectorAll('video').forEach(v => {
+                if (io) io.observe(v);  // modern browsers
+                else startVideo(v);     // older fallback
+            });
+
+            function onIntersect(entries) {
+                entries.forEach(entry => {
+                    const v = entry.target;
+                    if (entry.isIntersecting) startVideo(v);
+                    else pauseVideo(v);
+                });
+            }
+
+            /* load src & play */
+            function startVideo(v) {
+                if (!v.src) v.src = v.dataset.src;
+                v.autoplay = true;
+                const p = v.play();
+                if (p && typeof p.then === 'function') {
+                    p.catch(() => { /* Safari occasionally blocks – ignore */ });
+                }
+            }
+
+            /* pause & optionally free network */
+            function pauseVideo(v) {
+                if (!v.src) return;
+                v.pause();
+                // Uncomment next line to fully unload when off-screen (saves RAM at the cost of re-buffering):
+                // v.removeAttribute('src');
+            }
+        }
+
+        /* -------------------------------------------------
+           Init
+        ------------------------------------------------- */
+        function init() {
+            buildDOM();
+            setupLazyPlayback();
+        }
+
         document.readyState === 'loading'
-            ? document.addEventListener('DOMContentLoaded', buildVideoWall)
-            : buildVideoWall();
+            ? document.addEventListener('DOMContentLoaded', init)
+            : init();
     </script>
 </body>
 
