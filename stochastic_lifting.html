@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Stochastic Lifting – Video Wall</title>
+    <!-- External stylesheet -->
+    <link rel="stylesheet" href="stochastic_lifting.css" />
+</head>
+
+<body>
+    <main id="content"></main>
+
+    <script>
+        /* ---------------------------------------------------------
+           CONFIG: Specify directory display order here.
+           List folder names (no trailing slash). Any folders not
+           listed will appear afterward in alphabetical order.
+        --------------------------------------------------------- */
+        const customDirOrder = [
+            'wave', 'flow', 'polar', 'bair', 'clevrer'
+        ];
+
+        /* Utility: fetch directory links from auto‑index page */
+        async function listDir(path) {
+            try {
+                const res = await fetch(path);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const html = await res.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                return [...doc.querySelectorAll('a')].map(a => a.getAttribute('href'));
+            } catch (err) {
+                console.error('Failed to list', path, err);
+                return [];
+            }
+        }
+
+        /* Join path segments safely, ensure trailing slash */
+        function joinPath(...parts) {
+            const clean = parts.map(p => String(p).trim())
+                .filter(Boolean)
+                .map(p => p.replace(/^\/+|\/+$/g, ''));
+            return clean.join('/') + '/';
+        }
+
+        async function buildVideoWall() {
+            const base = 'sl_vids/';
+            const container = document.getElementById('content');
+
+            const rootHrefs = await listDir(base);
+            let folders = rootHrefs.filter(h => h.endsWith('/') && !h.includes('..'));
+
+            /* --- custom re‑ordering --------------------------- */
+            if (customDirOrder.length) {
+                const normalize = s => s.replace(/^\/+|\/+$/g, '').replace(base, '');
+                folders.sort((a, b) => {
+                    const na = normalize(a);
+                    const nb = normalize(b);
+                    const ia = customDirOrder.indexOf(na);
+                    const ib = customDirOrder.indexOf(nb);
+                    if (ia === -1 && ib === -1) return na.localeCompare(nb);
+                    if (ia === -1) return 1;
+                    if (ib === -1) return -1;
+                    return ia - ib;
+                });
+            }
+            /* ----------------------------------------------- */
+
+            for (let dir of folders) {
+                dir = dir.replace(/^\/+/, '').replace(base, '');
+                const dirPath = joinPath(base, dir);
+
+                const hrefs = await listDir(dirPath);
+                const mp4s = hrefs.filter(h => h.toLowerCase().endsWith('.mp4'));
+                if (!mp4s.length) continue;
+
+                const section = document.createElement('section');
+                section.className = 'directory';
+
+                const heading = document.createElement('h2');
+                heading.textContent = dir.replace(/\/$/, '');
+                section.appendChild(heading);
+
+                const grid = document.createElement('div');
+                grid.className = 'video-grid';
+
+                for (const fileHref of mp4s) {
+                    let src;
+                    if (fileHref.startsWith('http') || fileHref.startsWith('/')) {
+                        src = fileHref;
+                    } else if (fileHref.startsWith(dir)) {
+                        src = joinPath(base, fileHref);
+                    } else if (fileHref.startsWith(base)) {
+                        src = fileHref;
+                    } else {
+                        src = dirPath + fileHref;
+                    }
+
+                    const video = document.createElement('video');
+                    video.src = src;
+                    video.autoplay = true;
+                    video.muted = true;
+                    video.loop = true;
+                    video.playsInline = true;
+                    video.controls = false;
+
+                    grid.appendChild(video);
+                }
+
+                section.appendChild(grid);
+                container.appendChild(section);
+            }
+        }
+
+        document.readyState === 'loading' ?
+            document.addEventListener('DOMContentLoaded', buildVideoWall) :
+            buildVideoWall();
+    </script>
+</body>
+
+</html>

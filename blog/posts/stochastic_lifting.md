@@ -29,8 +29,8 @@ video directly in pixel space in just 0.96 seconds on a single H100.</span>
 </div> -->
 
 ---
-
-> Stochastic Lifting (SL) turns next-frame video and physics-trajectory generation into a simple regression problem by randomly labeling frames with high-dimensional Gaussian labels. Thus a single neural-network evaluation per frame then suffices to sample new trajectories—avoiding an expensive multi-step dynamic transport process (i.e. diffusion models).
+## Summary
+> Stochastic Lifting turns next-frame video and physics-trajectory generation into a simple regression problem by randomly labeling frames with high-dimensional Gaussian labels. Thus a single neural-network evaluation per frame then suffices to sample new trajectories—avoiding an expensive multi-step dynamic transport process inherent to diffusion models.
 
 ## Motivation
 
