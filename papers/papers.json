@@ -5,7 +5,7 @@
       "title": "Leveraging Gauge Freedom for Learning Non-Gradient Population Dynamics of Stochastic Systems",
       "image": "particles.gif",
       "abstract": "In existing works on population dynamics inference, there is a focus on flows arising from vector fields that are the gradients of scalar potentials. Among all admissible flows that are compatible with the population dynamics, gradient flows are optimal in a specific sense: they minimize kinetic energy. The selection of fields based on different criteria corresponds to a gauge freedom when determining population dynamics, which we leverage in this work. We propose Non-Gradient Inference Flows (NGIF), an algorithm to infer non-gradient population dynamics using a weak formulation of the continuity equation. This allows us to parameterize with general vector fields as well as choose other selection criteria beyond minimal energy. We demonstrate on a variety of low- and high-dimensional physics problems that this more general approach improves distributional accuracy over gradient-restricted baselines and better captures non-potential transport.",
-      "publication": "(Under Review)",
+      "publication": "ICML 2026",
       "authors": "J. Berman, T. Blickhan, B. Peherstorfer",
       "arxiv": "./files/Leveraging_Gauge_Freedom.pdf"
     },
@@ -14,7 +14,7 @@
       "title": "Stochastic Lifting for One-Step Per-Frame Video Generation and Physics Simulation",
       "image": "sl.gif",
       "abstract": "We introduce Stochastic Lifting, which challenges the prevailing view that accurately generating video and stochastic physics simulations requires some form of dynamic or optimal transport, which is inherently slow. Stochastic Lifting augments training data samples with high-dimensional stochastic labels and then learns a transition map from the current frame and label to the next frame via a simple regression problem. Evaluating the regression map on a newly drawn label generates a sample, which results in one-step per-frame inference. The error of samples generated with Stochastic Lifting can be bounded in the (empirical) Wasserstein-2 metric if the regression map interpolates and is smooth. Stochastic Lifting achieves state-of-the-art accuracy on simulating trajectories of stochastic physics systems and video generation benchmarks among one-step methods. We also demonstrate the scalability and low inference costs by generating 32 frames of 480x480 videos in pixel space in under one second on a single H100 GPU.",
-      "publication": "(Under Review)",
+      "publication": "ICML 2026",
       "authors": "J. Berman, T. Blickhan, B. Peherstorfer",
       "arxiv": "./files/Stochastic_Lifting.pdf"
     },

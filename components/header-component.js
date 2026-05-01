@@ -22,5 +22,4 @@ class HeaderComponent extends HTMLElement {
   }
 }
 
-// add later: <a href="/blog/index.html" class="hlink">blog</a>
 customElements.define('header-component', HeaderComponent);
